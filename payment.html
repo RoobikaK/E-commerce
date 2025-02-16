@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - Shopify</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>SHOPIFY</h1>
+        </div>
+    </header>
+
+    <main>
+        <h2>Payment Details</h2>
+
+        <div id="product-details">
+            <!-- Product details will be displayed here -->
+        </div>
+
+        <form id="payment-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" required>
+
+            <label for="address">Delivery Address:</label>
+            <input type="text" id="address" required>
+
+            <label for="district">District:</label>
+            <input type="text" id="district" required>
+
+            <label for="pincode">Pincode:</label>
+            <input type="text" id="pincode" required>
+
+            <label for="payment">Payment Details:</label>
+            <input type="text" id="payment" required>
+
+            <button type="submit">Confirm Purchase</button>
+        </form>
+    </main>
+
+    <script>
+        // Retrieve product details from localStorage
+        const selectedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
+
+        // Display product details
+        if (selectedProduct) {
+            document.getElementById('product-details').innerHTML = `
+                <h3>${selectedProduct.productName}</h3>
+                <img src="${selectedProduct.imageUrl}" alt="${selectedProduct.productName}">
+                <p>Size: ${selectedProduct.size}</p>
+            `;
+        }
+
+        // Handle form submission for payment
+        document.getElementById('payment-form').onsubmit = function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const address = document.getElementById('address').value;
+            const district = document.getElementById('district').value;
+            const pincode = document.getElementById('pincode').value;
+            const payment = document.getElementById('payment').value;
+
+            // Validate inputs
+            if (name && address && district && pincode && payment) {
+                alert("Your product will be delivered in 2 days.");
+                localStorage.removeItem('selectedProduct'); // Clear the product details
+                window.location.href = 'index.html'; // Redirect to home page
+            } else {
+                alert("Please fill in all fields.");
+            }
+        };
+    </script>
+</body>
+</html>

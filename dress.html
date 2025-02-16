@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dress - Shopify</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>SHOPIFY</h1>
+        </div>
+        <div class="header-right">
+            <form class="search-bar">
+                <input type="text" placeholder="Search...">
+                <button type="submit">Search</button>
+            </form>
+            <div id="cart-status">
+                <a href="cart.html">Cart (0)</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <h2>Dress Collection</h2>
+
+        <div class="category">
+            <h3>Women</h3>
+            <div class="category-images">
+                <img src="C:\Users\Roobika\Desktop\New folder (7)\New folder\images\images (3).jpeg" alt="Women 1">
+                <img src="C:\Users\Roobika\Desktop\New folder (7)\New folder\images\images (4).jpeg" alt="Women 2">
+                <img src="C:\Users\Roobika\Desktop\New folder (7)\New folder\images\images.jpeg" alt="Women 3">
+            </div>
+            <select id="size-women">
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+                <option value="XXL">XXL</option>
+            </select>
+            <button id="addToCartBtn-women">Add to Cart</button>
+            <button id="buyNowBtn-women">Buy Now</button>
+        </div>
+
+        <div class="category">
+            <h3>Men</h3>
+            <div class="category-images">
+                <img src="C:\Users\Roobika\Desktop\New folder (7)\New folder\images\download (6).jpeg" alt="Men 1">
+                <img src="C:\Users\Roobika\Desktop\New folder (7)\New folder\images\download (7).jpeg" alt="Men 2">
+                <img src="C:\Users\Roobika\Desktop\New folder (7)\New folder\images\download (8).jpeg" alt="Men 3">
+            </div>
+            <select id="size-men">
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+                <option value="XXL">XXL</option>
+            </select>
+            <button id="addToCartBtn-men">Add to Cart</button>
+            <button id="buyNowBtn-men">Buy Now</button>
+        </div>
+
+        <div class="category">
+            <h3>Kids</h3>
+            <div class="category-images">
+                <img src="C:\Users\Roobika\Desktop\New folder (7)\New folder\images\images (7).jpeg" alt="Kids 1">
+                <img src="C:\Users\Roobika\Desktop\New folder (7)\New folder\images\images (8).jpeg" alt="Kids 2">
+                <img src="C:\Users\Roobika\Desktop\New folder (7)\New folder\images\download (10).jpeg"s alt="Kids 3">
+            </div>
+            <select id="size-kids">
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+                <option value="XXL">XXL</option>
+            </select>
+            <button id="addToCartBtn-kids">Add to Cart</button>
+            <button id="buyNowBtn-kids">Buy Now</button>
+        </div>
+    </main>
+
+    <script>
+        // Function to add an item to the cart
+        function addToCart(productName, size, imageUrl) {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const product = { productName, size, imageUrl };
+
+            cart.push(product);
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            // Update Cart count in the header
+            updateCartCount();
+        }
+
+        // Update cart item count in the header
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            document.getElementById('cart-status').innerHTML = `<a href="cart.html">Cart (${cart.length})</a>`;
+        }
+
+        // Save product details to localStorage and redirect to payment page
+        function redirectToPayment(productName, size, imageUrl) {
+            const product = { productName, size, imageUrl };
+            localStorage.setItem('selectedProduct', JSON.stringify(product));
+            window.location.href = 'payment.html';
+        }
+
+        // Add to cart for Women category
+        document.getElementById('addToCartBtn-women').onclick = function() {
+            const size = document.getElementById('size-women').value;
+            addToCart("Women Dress", size, "https://via.placeholder.com/150x150?text=Women+1");
+        };
+
+        // Add to cart for Men category
+        document.getElementById('addToCartBtn-men').onclick = function() {
+            const size = document.getElementById('size-men').value;
+            addToCart("Men Dress", size, "https://via.placeholder.com/150x150?text=Men+1");
+        };
+
+        // Add to cart for Kids category
+        document.getElementById('addToCartBtn-kids').onclick = function() {
+            const size = document.getElementById('size-kids').value;
+            addToCart("Kids Dress", size, "https://via.placeholder.com/150x150?text=Kids+1");
+        };
+
+        // Buy Now for Women category
+        document.getElementById('buyNowBtn-women').onclick = function() {
+            const size = document.getElementById('size-women').value;
+            redirectToPayment("Women Dress", size, "https://via.placeholder.com/150x150?text=Women+1");
+        };
+
+        // Buy Now for Men category
+        document.getElementById('buyNowBtn-men').onclick = function() {
+            const size = document.getElementById('size-men').value;
+            redirectToPayment("Men Dress", size, "https://via.placeholder.com/150x150?text=Men+1");
+        };
+
+        // Buy Now for Kids category
+        document.getElementById('buyNowBtn-kids').onclick = function() {
+            const size = document.getElementById('size-kids').value;
+            redirectToPayment("Kids Dress", size, "https://via.placeholder.com/150x150?text=Kids+1");
+        };
+
+        // Initialize cart count when page loads
+        window.onload = function() {
+            updateCartCount();
+        };
+    </script>
+</body>
+</html>

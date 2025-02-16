@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart - Shopify</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>SHOPIFY</h1>
+        </div>
+        <div class="header-right">
+            <form class="search-bar">
+                <input type="text" placeholder="Search...">
+                <button type="submit">Search</button>
+            </form>
+            <!-- Display Cart icon with item count -->
+            <div id="cart-status">
+                <a href="cart.html">Cart (0)</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <h2>Your Cart</h2>
+        
+        <div id="cart-items">
+            <!-- Cart items will be populated here -->
+        </div>
+
+        <!-- Proceed to checkout -->
+        <button id="checkoutBtn">Proceed to Checkout</button>
+    </main>
+
+    <script>
+        // Load cart items and display them
+        function loadCart() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartItemsContainer = document.getElementById('cart-items');
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p>Your cart is empty.</p>';
+                return;
+            }
+
+            cartItemsContainer.innerHTML = '';
+
+            cart.forEach((item, index) => {
+                const itemElement = document.createElement('div');
+                itemElement.classList.add('cart-item');
+
+                itemElement.innerHTML = `
+                    <img src="${item.imageUrl}" alt="${item.productName}">
+                    <div>
+                        <p>${item.productName}</p>
+                        <p>Size: ${item.size}</p>
+                    </div>
+                    <button onclick="removeFromCart(${index})">Remove</button>
+                `;
+
+                cartItemsContainer.appendChild(itemElement);
+            });
+        }
+
+        // Remove item from cart
+        function removeFromCart(index) {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.splice(index, 1);  // Remove item at the given index
+            localStorage.setItem('cart', JSON.stringify(cart));
+            loadCart();  // Reload cart items
+            updateCartCount();
+        }
+
+        // Update cart count in the header
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            document.getElementById('cart-status').innerHTML = `<a href="cart.html">Cart (${cart.length})</a>`;
+        }
+
+        // Proceed to checkout (simple redirection for now)
+        document.getElementById('checkoutBtn').onclick = function() {
+            window.location.href = 'checkout.html';  // Redirect to a checkout page
+        }
+
+        // Load cart when page loads
+        window.onload = function() {
+            loadCart();
+            updateCartCount();
+        }
+    </script>
+</body>
+</html>
